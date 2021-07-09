@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAGA,EACE,eAAgB,CAChB,yBAEF,CAEA,mBACE,iBACF,CAEA,aACE,iBACF","file":"main.05115ba2.chunk.css","sourcesContent":["\n\n\n* {\n  margin-top: 10px;\n  text-transform: capitalize;\n\n}\n\ninput , label , button {\n  margin-right: 10px;\n}\n\n.alert , .card {\n  text-align: center;\n}\n"]}
