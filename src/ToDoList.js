@@ -1,8 +1,8 @@
 
-import ToDoElement from "./ToDoElement";
 import {useGlobalContext} from "./GlobalContext";
+import ToDoElement from "./ToDoElement";
 
-const ToDoList = ()=> {
+const ToDoList = () => {
 
 const {toDoList } = useGlobalContext();
 

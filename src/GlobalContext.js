@@ -1,10 +1,11 @@
 
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+
 import getLocalStorage from "./LocalStorage";
 
 const AppContext = React.createContext(null);
 
-const AppProvider = ({children})=> {
+const AppProvider = ({children}) => {
     const [toDo , setToDo] = useState('');
     const [toDoList ,setToDoList] = useState(getLocalStorage("list"));
     const [isEditing, setIsEditing] = useState(false);

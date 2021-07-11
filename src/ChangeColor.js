@@ -1,8 +1,9 @@
-import colorList from "./ButtonColorData";
 import {Button, ButtonGroup} from "react-bootstrap";
+
+import colorList from "./ButtonColorData";
 import {useGlobalContext} from "./GlobalContext";
 
-const ChangeColor = ()=> {
+const ChangeColor = () => {
 
 const {handleColorChange} = useGlobalContext();
 
