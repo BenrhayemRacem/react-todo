@@ -1,9 +1,10 @@
 import colorList from "./ButtonColorData";
 import {Button, ButtonGroup} from "react-bootstrap";
+import {useGlobalContext} from "./GlobalContext";
 
-const ChangeColor = (props)=> {
+const ChangeColor = ()=> {
 
-const handleColorChange = props.handleColorChange ;
+const {handleColorChange} = useGlobalContext();
 
    return ( <ButtonGroup aria-label="coloring" size="lg" className="mb-2" >
            {
