@@ -1,13 +1,13 @@
-import {Button} from "react-bootstrap";
-import {useGlobalContext} from "./GlobalContext";
+import { Button } from "react-bootstrap";
+import { useGlobalContext } from "./GlobalContext";
 
 const FormComponent = () => {
-  const {handleAddToDoElement, toDo, color, isEditing, handleSubmit} =
-      useGlobalContext();
+  const { handleAddToDoElement, toDo, color, isEditing, handleSubmit } =
+    useGlobalContext();
 
   return (
-      <form onSubmit = {handleSubmit}><label>what is your plan
-          ? < /label>
+    <form onSubmit={handleSubmit}>
+      <label>what is your plan ? </label>
       <input
         type="text"
         value={toDo}
@@ -15,10 +15,12 @@ const FormComponent = () => {
         placeholder="e.g/ /
                     Sunday
           : fishing "
-                    /
-                > {" "}<Button type = "submit" variant = {color}>{
-                      isEditing ? "edit" : "add element"}</Button>
-    </form>);
+      />{" "}
+      <Button type="submit" variant={color}>
+        {isEditing ? "edit" : "add element"}
+      </Button>
+    </form>
+  );
 };
 
 export default FormComponent;
