@@ -1,24 +1,22 @@
 
-import React, { useContext, useEffect, useReducer} from 'react';
+import React, {useContext, useEffect, useReducer} from 'react';
 import getLocalStorage from "./LocalStorage";
 
 import reducer from "./ToDoReducer";
-import  {TODO_ACTIONS} from "./ToDoReducer";
+import {TODO_ACTIONS} from "./ToDoReducer";
 
 const AppContext = React.createContext(null);
 
-
-const initialToDoState ={
-    toDo: "" ,
-    toDoList: getLocalStorage("list"),
-    isEditing: false,
-    alert:{variant:"" , message:""} ,
-    editId: '',
-    color:getLocalStorage("color"),
+const initialToDoState = {
+  toDo : "",
+  toDoList : getLocalStorage("list"),
+  isEditing : false,
+  alert : {variant : "", message : ""},
+  editId : '',
+  color : getLocalStorage("color"),
 }
 
-
-const AppProvider = ({children})=> {
+const AppProvider = ({children}) => {
     /*
     const [toDo , setToDo] = useState('');
     const [toDoList ,setToDoList] = useState(getLocalStorage("list"));

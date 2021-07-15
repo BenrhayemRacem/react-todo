@@ -2,7 +2,6 @@ import {Button, Card, Col} from "react-bootstrap";
 import {FaEdit, TiDeleteOutline} from "react-icons/all";
 import {useGlobalContext} from "./GlobalContext";
 
-
 const ToDoElement = (props) => {
    const {color , handleEditingToDoElement,handleDeleteToDoElement} = useGlobalContext()
     const textColor = (color==="warning"||color==="light") ? "black" : "white" ;
