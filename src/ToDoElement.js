@@ -1,6 +1,6 @@
-import { Button, Card, Col } from "react-bootstrap";
-import { FaEdit, TiDeleteOutline } from "react-icons/all";
-import { useGlobalContext } from "./GlobalContext";
+import {Button, Card, Col} from "react-bootstrap";
+import {FaEdit, TiDeleteOutline} from "react-icons/all";
+import {useGlobalContext} from "./GlobalContext";
 
 const ToDoElement = (props) => {
   const { color, handleEditingToDoElement, handleDeleteToDoElement } =
