@@ -1,90 +1,77 @@
 
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useReducer} from 'react';
 import getLocalStorage from "./LocalStorage";
+
+import reducer from "./ToDoReducer";
+import  {TODO_ACTIONS} from "./ToDoReducer";
 
 const AppContext = React.createContext(null);
 
+
+const initialToDoState ={
+    toDo: "" ,
+    toDoList: getLocalStorage("list"),
+    isEditing: false,
+    alert:{variant:"" , message:""} ,
+    editId: '',
+    color:getLocalStorage("color"),
+}
+
+
 const AppProvider = ({children})=> {
+    /*
     const [toDo , setToDo] = useState('');
     const [toDoList ,setToDoList] = useState(getLocalStorage("list"));
     const [isEditing, setIsEditing] = useState(false);
     const [alert ,setAlert] = useState( {variant:"" , message:""}) ;
     const [editId ,setEditId] = useState('');
     const [color , setColor] =useState(getLocalStorage("color")) ;
+     */
 
-    const handleAlerts= (variant , message)=> {
-        setAlert({variant,message});
-    }
-    const handleDeleteElement  =(id) => {
-        const filteredList = toDoList.filter((item)=> item.id !== id);
-        setToDoList(filteredList);
-        setToDo('');
-        handleAlerts("danger" , "element deleted");
-    }
-    const handleEditingElement =(id) => {
-        const element = toDoList.find((item)=> item.id===id);
-        setIsEditing(true) ;
-        setToDo(element.title);
-        setEditId(element.id);
-    }
-    const handleSubmit =(e)=> {
-        e.preventDefault();
+    const [state,dispatch]= useReducer(reducer,initialToDoState) ;
+ const handleAddToDoElement = (title)=> {
+     dispatch({type:TODO_ACTIONS.ADD_TO_DO , payload: {title}})
+ }
+ const handleDeleteToDoElement = (id) =>{
+     dispatch({type:TODO_ACTIONS.DELETE_TO_DO , payload: {id}})
+    } ;
+ const handleEditingToDoElement = ( title, id) => {
+     dispatch({
+         type:TODO_ACTIONS.EDIT_TO_DO ,
+         payload :{
+             title ,
+             id},
 
-        if (!toDo) {
-            handleAlerts("danger" , "cannot add empty string")
+     })
 
-        }
-        else if (toDo && isEditing) {
-            setToDoList(toDoList.map((item)=> {
-                if (item.id ===editId) {
-                    return {...item , title:toDo}
-                }
-                return item ;
-            }))
-            handleAlerts("success" , "updated successfully") ;
-            setIsEditing(false);
-            setEditId('');
-            setToDo('');
+ } ;
 
-        }
-        else  {
-            const newElement = [{id:new Date().toLocaleTimeString() , title: toDo}] ;
-            setToDoList(toDoList.concat(newElement)) ;
-            setToDo('');
+ const handleSubmit =(event) => {
+dispatch({type:TODO_ACTIONS.SUBMIT_TO_DO , payload:{event}})
+ }
+ const handleColorChange = (color) => {
+     dispatch({type:TODO_ACTIONS.CHANGE_COLOR , payload: {color}} )
+ }
 
-        }
-    }
-    const handleColorChange = (color) => {
-        setColor(color);
-    }
-    const handleInput =(chr) => {
-        setToDo(chr);
-    }
     useEffect(()=> {
-        let timeout = setTimeout(()=> handleAlerts("","") , 3000) ;
-        return ()=> clearTimeout(timeout);
-    } , [alert]) ;
+        dispatch({type:TODO_ACTIONS.SAVE_LIST}) ;
+    }, [state.toDoList]) ;
     useEffect(()=> {
-        localStorage.setItem('list' , JSON.stringify(toDoList)) ;
-    }, [toDoList]) ;
-    useEffect(()=> {
-        localStorage.setItem('color' , JSON.stringify(color)) ;
-    }, [color])
+     localStorage.setItem('color' , JSON.stringify(state.color)) ;
+ }, [state.color])
+
+
 
 
     return (
-        <AppContext.Provider value={{handleAlerts
-            ,handleSubmit,
-            handleColorChange,
-            handleDeleteElement,
-            handleEditingElement,
-            handleInput,
-            toDoList,
-            toDo,
-            alert,
-            isEditing,
-            editId,
-            color}}>
+        <AppContext.Provider value={{
+            ...state,
+            handleAddToDoElement,
+            handleDeleteToDoElement,
+            handleSubmit,
+            handleEditingToDoElement,
+            handleColorChange
+           }}>
             {children}
 
         </AppContext.Provider>
