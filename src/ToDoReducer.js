@@ -6,6 +6,7 @@ export const TODO_ACTIONS = {
   CHANGE_COLOR: "change-color",
   SAVE_LIST: "save-list",
   SAVE_COLOR: "save-color",
+  INIT_ALERT : "init-alert"
 };
 
 const reducer = (state, action) => {
@@ -17,7 +18,7 @@ const reducer = (state, action) => {
       const filteredList = state.toDoList.filter(
         (item) => item.id !== action.payload.id
       );
-      return { ...state, toDoList: filteredList, toDo: "" };
+      return { ...state, toDoList: filteredList, toDo: "" , alert:{ variant: "danger" , message: "element deleted"} };
 
     case TODO_ACTIONS.EDIT_TO_DO:
       return {
@@ -31,7 +32,7 @@ const reducer = (state, action) => {
       action.payload.event.preventDefault();
       if (!state.toDo) {
         // display alert
-        return { ...state };
+        return { ...state , alert:{variant:"danger" , message:"cannot add an empty string"} };
       } else if (state.toDo && state.isEditing) {
         const newToDoList = state.toDoList.map((toDoElement) => {
           if (toDoElement.id === state.editId) {
@@ -39,7 +40,7 @@ const reducer = (state, action) => {
           }
           return { ...toDoElement };
         });
-        return { ...state, toDoList: newToDoList };
+        return { ...state, toDoList: newToDoList , alert:{ variant: "success" , message: "element updated successfully"} };
       }
 
       const newElement = [
@@ -49,6 +50,7 @@ const reducer = (state, action) => {
         ...state,
         toDoList: state.toDoList.concat(newElement),
         toDo: "",
+        alert: {variant: "success" , message: "element added successfully"}
       };
 
     case TODO_ACTIONS.CHANGE_COLOR:
@@ -56,6 +58,8 @@ const reducer = (state, action) => {
     case TODO_ACTIONS.SAVE_LIST:
       localStorage.setItem("list", JSON.stringify(state.toDoList));
       return { ...state };
+    case TODO_ACTIONS.INIT_ALERT:
+      return {...state, alert: {variant: "" , message: ""}}
 
     default:
       return { ...state };

@@ -55,6 +55,10 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("color", JSON.stringify(state.color));
   }, [state.color]);
+  useEffect(()=> {
+    let timeout = setTimeout(()=>dispatch({type:TODO_ACTIONS.INIT_ALERT}) , 3000) ;
+    return ()=> clearTimeout(timeout)
+  }, [state.alert])
 
   return (
     <AppContext.Provider
